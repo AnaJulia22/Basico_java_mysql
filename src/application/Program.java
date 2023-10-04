@@ -8,16 +8,21 @@ import entities.Product;
 public class Program {
 
 	public static void main(String[] args) {
+		
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter product data:");
+		
 		System.out.println("Name: ");
 		String name = sc.nextLine();
+		
 		System.out.println("Price: ");
 		double price = sc.nextDouble();
+		
 //		System.out.println("Quantity in stock: ");
 //		int quantity = sc.nextInt();
+		
 		Product product = new Product(name, price);
 		
 		System.out.println();
@@ -39,16 +44,23 @@ public class Program {
 				product.addProducts(quantity);
 				
 			} else if (action.equals("remove")) {
-				
-				System.out.println();
-				System.out.println("Enter the number of products to be removed in stock: ");
-				quantity = sc.nextInt();
-				product.removeProducts(quantity);
+				if (product.quantity > 0) {
+					
+					System.out.println();
+					System.out.println("Enter the number of products to be removed in stock: ");
+					quantity = sc.nextInt();
+					product.removeProducts(quantity);
+					
+				} 
+				else {
+					
+					System.out.println("There is no product in the stock to be removed.");
+				}
 				
 			}
-			System.out.println();
-			System.out.println("Updated data: " + product);
 			
+			System.out.println();
+			System.out.println("Updated data: " + product);			
 			
 			System.out.println("Enter next action:");
 			action = sc.next();
