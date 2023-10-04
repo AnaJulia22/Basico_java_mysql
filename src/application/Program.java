@@ -22,23 +22,38 @@ public class Program {
 		
 		System.out.println();
 		System.out.println("Product data: " + product);
+		int quantity;
 		
-		System.out.println();
-		System.out.println("Enter the number of products to be added in stock: ");
-		int quantity = sc.nextInt();
-		product.addProducts(quantity);
+		System.out.println("Enter an action:");
+		System.out.println("Enter 'add' to add products in stock, 'remove' to remove products in stock or 'end' to finish program.");
+		String action = sc.next();
 		
-		System.out.println();
-		System.out.println("Updated data: " + product);
+		while (!(action.equals("end"))) {
+			
+			if (action.equals("add")) {
+				
+				System.out.println();
+				System.out.println("Enter the number of products to be added in stock: ");
+				quantity = sc.nextInt();
+				product.addProducts(quantity);
+				
+			} else if (action.equals("remove")) {
+				
+				System.out.println();
+				System.out.println("Enter the number of products to be removed in stock: ");
+				quantity = sc.nextInt();
+				product.removeProducts(quantity);
+				
+			}
+			System.out.println();
+			System.out.println("Updated data: " + product);
+			
+			
+			System.out.println("Enter next action:");
+			action = sc.next();
+		}
 		
-		System.out.println();
-		System.out.println("Enter the number of products to be removed in stock: ");
-		quantity = sc.nextInt();
-		product.removeProducts(quantity);
-		
-		System.out.println();
-		System.out.println("Updated data: " + product);
-		
+		System.out.println("Program terminated");
 		sc.close();
 
 	}
