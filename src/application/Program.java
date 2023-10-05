@@ -34,7 +34,8 @@ public class Program {
 			System.out.println("Enter an action:");
 			System.out.println("Enter 'add product' to add new product to stock," + "\n" 
 								+ "'add stock' to add products in stock, " + "\n" 
-								+ "'remove stock' to remove products in stock, " + "\n" 
+								+ "'remove stock' to remove a number of products in stock, " + "\n" 
+								+ "'remove product' to remove a product in stock, " + "\n"
 								+ "'edit name' to edit a product's name, " + "\n"
 								+ "'edit price' to edit product's price, " + "\n" 
 								+ "'show stock' to show products data in stock or " + "\n" 
@@ -81,8 +82,8 @@ public class Program {
 					quantity = sc.nextInt();
 					
 					PreparedStatement preparedStmt = connection.prepareStatement(" UPDATE produto \r\n"
-																+ "SET quantity = quantity + ? \r\n"
-																+ "WHERE name = ?");
+																					+ "SET quantity = quantity + ? \r\n"
+																					+ "WHERE name = ?");
 					
 					preparedStmt.setInt(1, quantity);
 					preparedStmt.setString(2, name);
@@ -105,8 +106,9 @@ public class Program {
 							System.out.println("Enter the number of products to be removed in stock: ");
 							quantity = sc.nextInt();
 
-							preparedStmt = connection.prepareStatement(
-									" UPDATE produto \r\n" + "SET quantity = quantity - ? \r\n" + "WHERE name = ?");
+							preparedStmt = connection.prepareStatement("UPDATE produto \r\n"
+																		+ "SET quantity = quantity - ? \r\n" 
+																		+ "WHERE name = ?");
 
 							preparedStmt.setInt(1, quantity);
 							preparedStmt.setString(2, name);
@@ -128,8 +130,8 @@ public class Program {
 					name = sc.nextLine();					
 					
 					PreparedStatement preparedStmt = connection.prepareStatement(" UPDATE produto \r\n"
-																+ "SET name = ? \r\n"
-																+ "WHERE name = ?");
+																					+ "SET name = ? \r\n"
+																					+ "WHERE name = ?");
 
 
 					preparedStmt.setString(1, name);
@@ -148,8 +150,8 @@ public class Program {
 					price = sc.nextDouble();
 					
 					PreparedStatement preparedStmt = connection.prepareStatement(" UPDATE produto \r\n"
-																+ "SET price = ? \r\n"
-																+ "WHERE name = ?");
+																					+ "SET price = ? \r\n"
+																					+ "WHERE name = ?");
 
 
 					preparedStmt.setDouble(1, price);
@@ -164,16 +166,30 @@ public class Program {
 					ResultSet resultSet = preparedStmt.executeQuery();
 					
 					while(resultSet.next()) {
-						System.out.println(resultSet.getInt(1)+ " " + resultSet.getString(2) + " " +  resultSet.getDouble(3) + " " + resultSet.getInt(4));
+						System.out.println(resultSet.getInt(1)+ " " 
+											+ resultSet.getString(2) + " " 
+											+ resultSet.getDouble(3) + " " 
+											+ resultSet.getInt(4));
+					}
+				}else if (action.equals("remove product")) {
+					System.out.println();
+					System.out.println("Enter which product you want to delete: ");
+					name = sc.nextLine();
+					
+					PreparedStatement preparedStmt = connection.prepareStatement("DELETE FROM produto WHERE name = ?");
+
+
+					preparedStmt.setString(1, name);
+
+					preparedStmt.executeUpdate();
+					
 				}
 
-				System.out.println("Enter next action:");
+				System.out.println("Enter next action:"); 
 				action = sc.nextLine();
 			}
 
 			System.out.println("Program terminated");
-			
-			}
 			
 			connection.close();
 		}
