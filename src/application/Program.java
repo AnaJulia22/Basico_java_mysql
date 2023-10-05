@@ -32,7 +32,13 @@ public class Program {
 			int quantity;
 
 			System.out.println("Enter an action:");
-			System.out.println("Enter 'add product' to add new product to stock," +"\n"+ "'add stock' to add products in stock, " +"\n" + "'remove stock' to remove products in stock, " + "\n"+ "'edit name' to edit a product's name, " + "\n"+ "'edit price' to edit product's price or " +"\n" + "'end' to finish program.");
+			System.out.println("Enter 'add product' to add new product to stock," + "\n" 
+								+ "'add stock' to add products in stock, " + "\n" 
+								+ "'remove stock' to remove products in stock, " + "\n" 
+								+ "'edit name' to edit a product's name, " + "\n"
+								+ "'edit price' to edit product's price, " + "\n" 
+								+ "'show stock' to show products data in stock or " + "\n" 
+								+ "'end' to finish program.");
 			String action = sc.nextLine();
 
 			while (!(action.equals("end"))) {
@@ -152,6 +158,13 @@ public class Program {
 					preparedStmt.executeUpdate();
 					
 
+				} else if (action.equals("show stock")) {
+					PreparedStatement preparedStmt = connection.prepareStatement("select * from produto");
+					
+					ResultSet resultSet = preparedStmt.executeQuery();
+					
+					while(resultSet.next()) {
+						System.out.println(resultSet.getInt(1)+ " " + resultSet.getString(2) + " " +  resultSet.getDouble(3) + " " + resultSet.getInt(4));
 				}
 
 				System.out.println("Enter next action:");
@@ -160,12 +173,6 @@ public class Program {
 
 			System.out.println("Program terminated");
 			
-			PreparedStatement preparedStmt = connection.prepareStatement("select * from produto");
-			
-			ResultSet resultSet = preparedStmt.executeQuery();
-			
-			while(resultSet.next()) {
-				System.out.println(resultSet.getInt(1)+ " " + resultSet.getString(2) + " " +  resultSet.getDouble(3) + " " + resultSet.getInt(4));
 			}
 			
 			connection.close();
