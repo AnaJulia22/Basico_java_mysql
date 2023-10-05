@@ -1,2 +1,2 @@
 # java_curso
-Básico de Java e sql
+Básico de Java e Mysql
