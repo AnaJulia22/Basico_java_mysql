@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -18,7 +19,7 @@ public class Program {
 		String url = "jdbc:mysql://localhost:4306/java_curso";
 		String username = "root";
 		String password = "";
-		
+		Scanner sc = new Scanner(System.in);
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -27,6 +28,30 @@ public class Program {
 			
 			Statement statement = connection.createStatement();
 			
+			String sql = " insert into produto (id, name, price, quantity)"
+					    + " values (?, ?, ?, ?)";
+			
+			PreparedStatement preparedStmt = connection.prepareStatement(sql);
+			
+			
+			
+			System.out.println("Enter product data:");
+			
+			System.out.println("Name: ");
+			String name = sc.nextLine();
+			
+			System.out.println("Price: ");
+			double price = sc.nextDouble();
+			
+			System.out.println("Quantity: ");
+			int quantity = sc.nextInt();
+			
+			preparedStmt.setInt(1, 1);			
+			preparedStmt.setString(2, name);
+			preparedStmt.setDouble(3, price);
+			preparedStmt.setInt(4,quantity);
+			
+			preparedStmt.execute();
 			
 			ResultSet resultSet = statement.executeQuery("select * from produto");
 			
@@ -43,7 +68,7 @@ public class Program {
 		
 		
 		Locale.setDefault(Locale.US);
-		Scanner sc = new Scanner(System.in);
+		
 		
 		System.out.println("Enter product data:");
 		
